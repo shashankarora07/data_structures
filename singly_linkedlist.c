@@ -115,18 +115,13 @@ void Insert_linkedlist(Node **head, int newdata, int option)
 void Delete_fromLinked_list(Node **head, int option)
 {
 	int count = 1;
+		int position = 0;
 	Node *temp = *head, *temp2 = NULL;
 	if (*head == NULL) {
 		printf("List is already empty\n");
 		return;
 	}
-	if (option == DELETE_BEG) {
-		*head = (*head)->next;
-		free(temp);
-		return;	
-	}
 	if (option == DELETE_POS) {
-		int position = 0;
 		printf("Enter position: \n");
 		scanf("%d",&position);
 		while((temp != NULL) && (count < position)) {
@@ -139,6 +134,11 @@ void Delete_fromLinked_list(Node **head, int option)
 			return;
 		}
 	} 
+	if (option == DELETE_BEG || (position == 1)) {
+		*head = (*head)->next;
+		free(temp);
+		return;	
+	}
 	else {
 		while (temp->next != NULL) {
 			temp2 = temp;
