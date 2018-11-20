@@ -80,12 +80,13 @@ void Insert_linkedlist(Node **head, int newdata, int option)
 		int position = 0;
 		printf("Enter position: \n");
 		scanf("%d",&position);
-		while( )
+		while( count < position - 1)
 	} else {
 		while(start->next != NULL)
 			start = start->next;
 	}
-	
+	newnode->next = start->next;
+	start->next = newnode;
 	
 }
 
