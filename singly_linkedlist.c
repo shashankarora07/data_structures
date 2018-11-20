@@ -14,11 +14,15 @@ enum{
 	INSERT_END,
 	INSERT_POS,
 	DISPLAY,
+	DELETE_BEG,
+	DELETE_LAST,
+	DELETE_POS,
 	EXIT=100
 
 };
 
-void Insert_linkedlist(Node **, int);
+void Insert_linkedlist(Node **, int, int);
+void Delete_fromLinked_list(Node **, int);
 void Display_linkedlist(Node *);
 
 int main()
@@ -30,7 +34,10 @@ int main()
 		printf("............Insert at the Begining : Press 1..............\n");
 		printf("............Insert at the END      : Press 2..............\n");
 		printf("............Insert at any Position : Press 3..............\n");
-		printf(".......     Display Linked list......Press 4..............\n");
+		printf("............Display Linked list    : Press 4..............\n");
+		printf("............Delete first node      : Press 5..............\n");
+		printf("............Delete last node       : Press 6..............\n");
+		printf("............Delete any node        : Press 7..............\n");
 		printf("Enter choice:\n");
 		scanf("%d",&choice);
 		switch(choice)
@@ -49,6 +56,14 @@ int main()
 				Display_linkedlist(head);
 				break;
 			}
+			case DELETE_BEG:
+			case DELETE_LAST:
+			case DELETE_POS:
+			{
+				Delete_fromLinked_list(&head,choice);
+				break;
+			}
+			
 			default:
 				printf("Get lost!! \n");
 
@@ -80,13 +95,59 @@ void Insert_linkedlist(Node **head, int newdata, int option)
 		int position = 0;
 		printf("Enter position: \n");
 		scanf("%d",&position);
-		while( )
+		while((start != NULL) && (count < position - 1)) {
+			count++;
+			start = start->next;
+	        }
+	      if (start == NULL) {
+			printf("position is out of scope\n");
+			return;
+		}
 	} else {
 		while(start->next != NULL)
 			start = start->next;
 	}
+	newnode->next = start->next;
+	start->next = newnode;
 	
-	
+}
+
+void Delete_fromLinked_list(Node **head, int option)
+{
+	int count = 1;
+		int position = 0;
+	Node *temp = *head, *temp2 = NULL;
+	if (*head == NULL) {
+		printf("List is already empty\n");
+		return;
+	}
+	if (option == DELETE_POS) {
+		printf("Enter position: \n");
+		scanf("%d",&position);
+		while((temp != NULL) && (count < position)) {
+			count++;
+			temp2 = temp;
+			temp = temp->next;
+	        }
+	      if (temp == NULL) {
+			printf("position is out of scope\n");
+			return;
+		}
+	} 
+	if (option == DELETE_BEG || (position == 1)) {
+		*head = (*head)->next;
+		free(temp);
+		return;	
+	}
+	else {
+		while (temp->next != NULL) {
+			temp2 = temp;
+			temp = temp->next;
+		}
+	}
+	temp2->next = temp->next;
+	free(temp);
+
 }
 
 void Display_linkedlist(Node *node)
