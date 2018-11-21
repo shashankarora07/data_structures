@@ -124,16 +124,37 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 
 void Delete_from_doubly_linkedlist(DLLNode **head, int option)
 {
-	DLLNode *temp = *head;
+	DLLNode *temp = *head, *temp2;
 	int count = 1, position = 0;
+
 	if (*head == NULL) {
 		printf("List is empty\n");
 		return;
 	}
-	if (option == DELETE_BEG || position == 1) {
-		*head = (*head)->next;
+	if (option == DELETE_POS) {
+		printf("Enter position\n");
+		scanf("%d",&position);
+		while((temp->next != NULL) && (count < position))
+			temp = temp->next;
 		
 	}
+	if (option == DELETE_BEG || position == 1) {
+		*head = (*head)->next;
+		if (*head != NULL)
+			(*head)->prev = NULL;
+		free(temp);
+		return;					
+	} else {
+		while(temp->next != NULL)
+			temp = temp->next;
+	}
+	temp2 = temp->prev;
+	temp2->next = temp->next;
+	if (temp->next)
+		temp->next->prev = temp2;
+	free(temp);
+	return;
+	
 }
 
 void Display_doubly_linkedlist(DLLNode *head)
