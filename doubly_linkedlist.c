@@ -3,8 +3,8 @@
 
 struct DoublyListnode {
 	int data;
-	struct DoublyListnode *prev;
 	struct DoublyListnode *next;
+	struct DoublyListnode *prev;
 };
 
 typedef struct DoublyListnode DLLNode;
@@ -76,9 +76,64 @@ int main()
 
 void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 {
+	DLLNode *temp = *head;
+	DLLNode  *newnode;
+	int count = 1, position = 0;
+	newnode = (DLLNode *)malloc(sizeof(DLLNode));
+	newnode->data = newdata;
+	if (!newnode) {
+		printf("malloc failed\n");
+		return;
+	}
+	if (option == INSERT_POS) {
+		printf("Enter position: \n");
+		scanf("%d",&position);
+		while ((temp->next != NULL) && (count < position-1)) {
+			count++;
+			temp = temp->next;
+		}
+		if (!temp) {
+			printf("position is out of scope\n");
+			return;
+		}	
+	}
+	if (option == INSERT_BEG || position == 1) {
+		newnode->next = *head;
+		newnode->prev = NULL;
+		if (*head)
+			(*head)->prev = newnode;
 
-
+		*head = newnode;
+		return;		
+	} else {
+		while (temp->next != NULL)
+			temp = temp->next;
+	}
+	if (*head == NULL){
+		printf("No node is present\n");
+		return;
+	}
+	newnode->next = temp->next;
+	newnode->prev = temp;
+	if (temp->next)
+		temp->next->prev = newnode;
+	temp->next = newnode;
+	return;
 }
 
 
+void Delete_from_doubly_linkedlist(DLLNode **head, int option)
+{
+
+}
+
+void Display_doubly_linkedlist(DLLNode *head)
+{
+	DLLNode *node = head;
+	while (node != NULL) {
+		printf("%d-->",node->data);
+		node = node->next;
+	}
+	printf("NULL\n");
+}
 
