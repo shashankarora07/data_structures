@@ -124,7 +124,16 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 
 void Delete_from_doubly_linkedlist(DLLNode **head, int option)
 {
-
+	DLLNode *temp = *head;
+	int count = 1, position = 0;
+	if (*head == NULL) {
+		printf("List is empty\n");
+		return;
+	}
+	if (option == DELETE_BEG || position == 1) {
+		*head = (*head)->next;
+		
+	}
 }
 
 void Display_doubly_linkedlist(DLLNode *head)
