@@ -78,15 +78,76 @@ int main()
 
 void Insert_circular_linkedlist(CircularNode **head, int newdata, int option)
 {
+	CircularNode *newnode, *current = *head;
+	newnode = (CircularNode *)malloc(sizeof(CircularNode));
+	newnode->data = newdata;
+	if (option == INSERT_BEG) {
+		newnode->next = newnode;
+		if (*head == NULL) {
+			*head = newnode;
+		} else {
+			while (current->next != *head)
+				current = current->next;
+			newnode->next = *head;
+			current->next = newnode;
+			*head = newnode;
+		}
+		return;	
+	} else {
+		while (current->next != *head)
+			current = current->next;
+		newnode->next = newnode;
+		if (*head == NULL)
+			*head = newnode;
+		else {
+			newnode->next = *head;
+			current->next = newnode;
+		}
+		return;
+	}	
 
 }
 
 void Delete_from_circular_linkedlist(CircularNode **head, int option)
 {
-
+	CircularNode *temp = *head;
+	CircularNode  *current = *head;
+	if (NULL == *head) {
+		printf("List is empty\n");
+		return;
+	}
+	if (option == DELETE_BEG) {
+		while (current->next != *head) {
+			current = current->next;
+		}
+		current->next = (*head)->next;
+		if (*head == (*head)->next) {
+				*head = NULL;
+		} else {
+			*head = (*head)->next;
+		}
+		*head = (*head)->next;
+		free(temp);
+		temp = NULL;		
+		return;
+	} else {
+		while (current->next != *head) {
+			temp = current;
+			current = current->next;
+		}
+		temp->next = current->next;
+		free(current);
+		current = NULL;
+		return;	
+	}
 }
 
 void Display_circular_linkedlist(CircularNode *head)
 {
-
+	CircularNode *node = head;
+	do { 
+		printf("%d-->",node->data);
+		node = node->next;
+	} while (node != head);
+	printf("NULL\n");
 }
