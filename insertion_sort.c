@@ -29,7 +29,7 @@ int Insertion_sort(int *arr, int N)
 		key = arr[i];
 		k = i;
 		while(k >= 1 && arr[k-1] > key) {
-			/*swap the element and shift it to right position*/
+			/*Insert the element and move to the next position*/
 			arr[k] = arr[k-1];
 			k--;
 		}
