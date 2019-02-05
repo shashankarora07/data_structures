@@ -76,7 +76,7 @@ int main()
             {
 			if (IsQueueEmpty(&Q)) {
 				printf("Queue is empty\n");
-				return 0;
+				break;
 			}
                 ret = Dequeue(&Q);
 				printf("Dequeued Item : %d\n",ret);
@@ -86,7 +86,7 @@ int main()
 			{
 			if (IsQueueEmpty(&Q)) {
 				printf("Queue is empty\n");
-				return 0;
+				break;
 			}
 				Delete_Queue(&Q);
 			}
@@ -132,6 +132,10 @@ int Dequeue(struct Queue **Q)
 	(*Q)->front = (*Q)->front->next;	
 	free(temp);
 	temp = NULL;
+
+    if ((*Q)->front == NULL) {
+            (*Q)->rear = NULL;
+    }
 
 	return data;		
 }
