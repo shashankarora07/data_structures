@@ -17,7 +17,8 @@ struct stack{
 };
 
 enum operations {
-	PUSH = 1,
+	CREATEQUEUE = 1,
+	PUSH,
 	POP,
 	DISPLAY,
 	EXIT = 100
@@ -25,6 +26,7 @@ enum operations {
 
 void push();
 void pop();
+Queue * CreateQueue();
 int enqueue(Queue *, int);
 void dequeue(Queue **);
 void Display(Queue *);
@@ -35,15 +37,21 @@ int main()
 	Queue *q = NULL;
 	do {
 		printf("......IMPLEMENTATION OF STACK USING QUEUES OPERATIONS........\n");
-		printf("............PUSH : Press 1..........\n");
-		printf("............POP : Press 2............\n");
-		printf("............DISPLAY : Press 3..........\n");
+		printf("............CREATEQUEUE : Press 1..........\n");
+		printf("............PUSH : Press 2..........\n");
+		printf("............POP : Press 3............\n");
+		printf("............DISPLAY : Press 4..........\n");
 		scanf("%d",&choice);
 		switch(choice)
 		{
-			printf("Enter data : \n");
-			scanf("%d",&data);
-			case PUSH: enqueue(q,data);
+			case CREATEQUEUE: q = CreateQueue();
+			break;
+			case PUSH: 
+			{	
+				printf("Enter data : \n");
+				scanf("%d",&data);
+				q = enqueue(q,data);
+			}
 			break;
 		}
 	}while(choice != EXIT);
@@ -52,7 +60,11 @@ int main()
 	return 0;
 }
 
-int enqueue(Queue *q, int newdata)
+Queue * CreateQueue()
+{
+	
+}
+Queue * enqueue(Queue *q, int newdata)
 {
 	QNode *Qnewnode = (QNode *)malloc(sizeof(QNode));
 	Qnewnode->data = newdata;
@@ -68,7 +80,7 @@ int enqueue(Queue *q, int newdata)
 	if (NULL == q->rear) {
 		printf("Also comes in this first time\n");
 		q->front = q->rear = Qnewnode;
-		return 0;		
+		return q;		
 	}	
 			
 	q->rear->next = Qnewnode;
