@@ -25,7 +25,7 @@ enum operations {
 
 void push();
 void pop();
-Queue * enqueue(Queue *, int);
+Queue ** enqueue(Queue **, int);
 void dequeue(Queue **);
 void Display(Queue *);
 
@@ -41,9 +41,21 @@ int main()
 		scanf("%d",&choice);
 		switch(choice)
 		{
-			printf("Enter data : \n");
-			scanf("%d",&data);
-			case PUSH: q = enqueue(q,data);
+			case PUSH:
+			{
+				printf("Enter data : \n");
+				scanf("%d",&data);
+				enqueue(&q,data);
+			}
+			break;
+			case DISPLAY:
+			{
+				if (q == NULL) {
+					printf("Queue is empty\n");
+					break;
+				}
+				Display(q);
+			}
 			break;
 		}
 	}while(choice != EXIT);
@@ -52,27 +64,31 @@ int main()
 	return 0;
 }
 
-Queue * enqueue(Queue *q, int newdata)
+Queue ** enqueue(Queue **q, int newdata)
 {
 	QNode *Qnewnode = (QNode *)malloc(sizeof(QNode));
 	Qnewnode->data = newdata;
 	Qnewnode->next = NULL;
 	
-	if (NULL == q) {
+	if (NULL == (*q)) {
 		printf("First time it will come in this ONLY\n");
 		printf("Queue is not present. Now created..\n");
-		q = (Queue *)malloc(sizeof(Queue));
-		q->rear = q->front = NULL;
+		q = (Queue **)malloc(sizeof(Queue*));
+		if (!q) {
+			perror("malloc failed");
+			return NULL;
+		}
+		(*q)->rear = (*q)->front = NULL;
 	}
 	
-	if (NULL == q->rear) {
+	if (NULL == (*q)->rear) {
 		printf("Also comes in this first time\n");
-		q->front = q->rear = Qnewnode;
-		return q;		
+		(*q)->front = (*q)->rear = Qnewnode;
+		//return q;		
 	}	
 			
-	q->rear->next = Qnewnode;
-	q->rear = q->rear->next;
+	(*q)->rear->next = Qnewnode;
+	(*q)->rear = (*q)->rear->next;
 }
 
 void Display(Queue *q)
