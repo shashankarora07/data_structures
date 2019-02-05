@@ -7,8 +7,8 @@ typedef struct QueueNode {
 }QNode;
 
 typedef struct QueueList{
-	struct QueueList *rear;
-	struct QueueList *front;
+	struct QueueNode *rear;
+	struct QueueNode *front;
 }Queue;
 
 struct stack{
@@ -25,11 +25,13 @@ enum operations {
 
 void push();
 void pop();
-void enqueue(Queue **, int);
+int enqueue(Queue *, int);
 void dequeue(Queue **);
+void Display(Queue *);
+
 int main()
 {
-	int data, choice;
+	int data = 0, choice = 0;
 	Queue *q = NULL;
 	do {
 		printf("......IMPLEMENTATION OF STACK USING QUEUES OPERATIONS........\n");
@@ -41,7 +43,7 @@ int main()
 		{
 			printf("Enter data : \n");
 			scanf("%d",&data);
-			case PUSH: enqueue(&q,data);
+			case PUSH: enqueue(q,data);
 			break;
 		}
 	}while(choice != EXIT);
@@ -50,24 +52,35 @@ int main()
 	return 0;
 }
 
-void enqueue(Queue **q, int newdata)
+int enqueue(Queue *q, int newdata)
 {
 	QNode *Qnewnode = (QNode *)malloc(sizeof(QNode));
 	Qnewnode->data = newdata;
 	Qnewnode->next = NULL;
 	
-	if (NULL == (*q)) {
+	if (NULL == q) {
 		printf("First time it will come in this ONLY\n");
 		printf("Queue is not present. Now created..\n");
-		q = (Queue **)malloc(sizeof(Queue *));
-		(*q)->rear = (*q)->front = NULL;
+		q = (Queue *)malloc(sizeof(Queue));
+		q->rear = q->front = NULL;
 	}
 	
-	if (NULL == (*q)->rear) {
-		(*q)->front = (*q)->rear = Qnewnode;
-		return;		
+	if (NULL == q->rear) {
+		printf("Also comes in this first time\n");
+		q->front = q->rear = Qnewnode;
+		return 0;		
 	}	
 			
-	(*q)->rear->next = Qnewnode;
-	(*q)->rear = (*q)->rear->next;
+	q->rear->next = Qnewnode;
+	q->rear = q->rear->next;
+}
+
+void Display(Queue *q)
+{
+	QNode *Dp = q->front;
+	while(Dp != NULL) {
+		printf("%d ->",Dp->data);
+		Dp = Dp->next;
+	}
+	printf("NULL");
 }	
