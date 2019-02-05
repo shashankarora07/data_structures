@@ -26,7 +26,8 @@ enum operations {
 
 void Push(struct stack *, int);
 int Pop(struct stack *);
-Queue * CreateQueue();
+struct stack * CreateStack();
+Queue * CreateQueue(Queue *);
 int Enqueue(Queue *, int);
 int Dequeue(Queue **);
 void Display(Queue *);
@@ -36,6 +37,7 @@ int main()
 {
 	int data = 0, choice = 0, ret = 0;
 	Queue *q = NULL;
+	struct stack *s = NULL;
 	do {
 		printf("......IMPLEMENTATION OF STACK USING QUEUES OPERATIONS........\n");
 		printf("............CREATEQUEUE : Press 1..........\n");
@@ -46,21 +48,22 @@ int main()
 		switch(choice)
 		{
 			case CREATEQUEUE: 
-				if (q != NULL) {
-					printf("Queue is present\n");
+				if (s != NULL) {
+					printf("Stack is present\n");
 					break;
 				}
-				q = CreateQueue();
+				s = CreateStack();
+				//q = CreateQueue();
 			break;
 			case PUSH: 
 			{	
-				if (q == NULL) {
-					printf("Queue is not present. First create it\n");
+				if (s == NULL) {
+					printf("Stack is not present. First create it\n");
 					break;
 				}
 				printf("Enter data : \n");
 				scanf("%d",&data);
-				Push(q, data);
+				Push(s, data);
 				//Enqueue(q,data);
 			}
 			break;
@@ -76,11 +79,14 @@ int main()
 			break;
 			case DISPLAY: 
 			{
-				if (q == NULL) {
-					printf("Queue is empty\n");
+				if (s == NULL) {
+					printf("stack is empty\n");
 					break;
 				}
-				Display(q);
+				if (IsQueueEmpty(&s->q1))
+					Display(s->q2);
+				else
+					Display(s->q1);
 			}
 			break;
 		}
@@ -91,9 +97,48 @@ int main()
 }
 
 
-Queue * CreateQueue()
+struct stack * CreateStack()
 {
-	Queue *Q = (Queue *)malloc(sizeof(Queue));
+	struct stack *s = (struct stack *)malloc(sizeof(struct stack));
+	Queue *Q;
+    if (!s) {
+        perror("Malloc failed:");
+        return NULL;
+    }
+	s->q1 = NULL;
+	s->q2 = NULL;
+
+	return s;
+}
+
+void Push(struct stack *s, int newdata)
+{
+/*	if (s->q1 != NULL) {
+		printf("Queue is present already\n");
+		
+	}
+*/
+	if (!s->q1) {
+		printf("Create 1st Queue\n");
+		s->q1 = CreateQueue(s->q1);
+	}
+	if (!s->q2) {
+		printf("Create 2nd Queue\n");
+		s->q2 = CreateQueue(s->q2);
+	}
+	if (IsQueueEmpty(&s->q1)) {
+		printf("Added in queue2\n");
+		Enqueue(s->q2, newdata);
+	}
+	else {
+		printf("Added in queue1\n");
+		Enqueue(s->q1, newdata);
+	}			
+}
+
+Queue * CreateQueue(Queue *Q)
+{
+	Q = (Queue *)malloc(sizeof(Queue));
 	if (!Q) {
 		perror("Malloc failed:");
 		return NULL;
@@ -129,7 +174,7 @@ int Dequeue(Queue **q)
 	temp = NULL;	
 	
 	if ((*q)->front == NULL) {
-			(*q)->rear = NULL;
+		(*q)->rear = NULL;
 	}
 	return data;
 }
@@ -138,7 +183,6 @@ int IsQueueEmpty(Queue **Q)
 {
 		return (NULL == (*Q)->front);
 }
-
 
 void Display(Queue *q)
 {
