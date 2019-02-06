@@ -25,7 +25,7 @@ enum operations {
 };
 
 void Push(struct stack *, int);
-int Pop(struct stack *);
+int Pop(struct stack **);
 struct stack * CreateStack();
 Queue * CreateQueue(Queue *);
 int Enqueue(Queue *, int);
@@ -69,11 +69,7 @@ int main()
 			break;
 			case POP:
 				{
-					if (IsQueueEmpty(&q)) {
-						printf("Queue Is empty\n");
-						break;
-					}
-					ret = Dequeue(&q);
+					ret = Pop(&s);
 					printf("POP Item = %d\n",ret);
 				}
 			break;
@@ -134,6 +130,11 @@ void Push(struct stack *s, int newdata)
 		printf("Added in queue1\n");
 		Enqueue(s->q1, newdata);
 	}			
+}
+
+int Pop(struct stack *s)
+{
+
 }
 
 Queue * CreateQueue(Queue *Q)
