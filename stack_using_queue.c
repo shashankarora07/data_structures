@@ -25,7 +25,7 @@ enum operations {
 };
 
 void Push(struct stack *, int);
-int Pop(struct stack **);
+int Pop(struct stack *);
 struct stack * CreateStack();
 Queue * CreateQueue(Queue *);
 int Enqueue(Queue *, int);
@@ -69,7 +69,11 @@ int main()
 			break;
 			case POP:
 				{
-					ret = Pop(&s);
+			    if ((IsQueueEmpty(&s->q1)) && (IsQueueEmpty(&s->q2))) {
+             	    printf("Stack is empty\n");
+                	break;
+            	}
+					ret = Pop(s);
 					printf("POP Item = %d\n",ret);
 				}
 			break;
@@ -122,19 +126,32 @@ void Push(struct stack *s, int newdata)
 		printf("Create 2nd Queue\n");
 		s->q2 = CreateQueue(s->q2);
 	}
-	if (IsQueueEmpty(&s->q1)) {
-		printf("Added in queue2\n");
-		Enqueue(s->q2, newdata);
-	}
-	else {
+	if (IsQueueEmpty(&s->q2)) {
 		printf("Added in queue1\n");
 		Enqueue(s->q1, newdata);
+	}
+	else {
+		printf("Added in queue2\n");
+		Enqueue(s->q2, newdata);
 	}			
 }
 
 int Pop(struct stack *s)
 {
+    if (IsQueueEmpty(&s->q2)) {
+        printf("Moved from queue1 to queue2 except last\n");
+		while(s->q1->front->next)
+        	Enqueue(s->q2,Dequeue(&s->q1));
+	
+		return Dequeue(&s->q1);
+    }
+    else {
+        printf("Moved from queue2 to queue1 except last\n");
+        while(s->q2->front->next)
+            Enqueue(s->q1,Dequeue(&s->q2));
 
+        return Dequeue(&s->q2);
+    }
 }
 
 Queue * CreateQueue(Queue *Q)
