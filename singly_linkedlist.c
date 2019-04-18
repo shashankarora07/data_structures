@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include"singly_linkedlist.h"
 
-
-struct ListNode{
-	int data;
-	struct ListNode *next;
-};
-
-typedef struct ListNode Node;
 
 enum{
 	INSERT_BEG=1,
@@ -21,10 +15,7 @@ enum{
 
 };
 
-void Insert_linkedlist(Node **, int, int);
-void Delete_fromLinked_list(Node **, int);
-void Display_linkedlist(Node *);
-
+/*
 int main()
 {
 
@@ -74,7 +65,7 @@ int main()
 
 	return 0;
 }
-
+*/
 
 void Insert_linkedlist(Node **head, int newdata, int option)
 {
