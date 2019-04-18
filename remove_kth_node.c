@@ -18,7 +18,7 @@ Node* Remove_kthNode_FromLast(Node **head, int kPos)
 	
 	int aPos = len - kPos + 1;
 	
-	if (aPos == 1) {
+	if (aPos == 1 || aPos <= 0) {
 		*head = temp->next;
 		free(temp);
 		return head;
@@ -45,7 +45,7 @@ int main()
 			Insert_linkedlist(&head,i,2);
 	}
 	
-	Remove_kthNode_FromLast(&head,3);
+	Remove_kthNode_FromLast(&head,8);
 	Display_linkedlist(head);
 
 	return 0;
