@@ -2,23 +2,23 @@
 #include<stdlib.h>
 #include "singly_linkedlist.h"
 
-Node* Remove_kthNode_FromLast(Node **head, int kPos)
+Node* Remove_kthNode_FromLast_recursive(Node **head, int kPos)
 {
 	if (*head == NULL) {
-		printf("List is empty\n");
+		printf("List is empty Now\n");
 		return;
 	}
 	Node *start = *head, *temp = *head, *temp2 = NULL;
-	int len = 0;
 	
 	while(start != NULL) {
 		start = start->next;
 		len++;
 	}
+	Remove_kthNode_FromLast_recursive(*(head)->next, kPos);
 	
-	int aPos = len - kPos + 1;
-	
-	if (aPos == 1) {
+	int aPos = 0;
+
+	while (aPos == kPos) {
 		*head = temp->next;
 		free(temp);
 		return head;
@@ -45,7 +45,7 @@ int main()
 			Insert_linkedlist(&head,i,2);
 	}
 	
-	Remove_kthNode_FromLast(&head,3);
+	Remove_kthNode_FromLast_recursive(&head,3);
 	Display_linkedlist(head);
 
 	return 0;
