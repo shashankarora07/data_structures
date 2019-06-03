@@ -4,33 +4,22 @@
 
 Node* Remove_kthNode_FromLast_recursive(Node **head, int kPos)
 {
+	static int aPos = 0;
+
 	if (*head == NULL) {
 		printf("List is empty Now\n");
-		return;
+		return NULL;
 	}
-	Node *start = *head, *temp = *head, *temp2 = NULL;
+//	Node *start = *head, *temp = *head, *temp2 = NULL;
 	
-	while(start != NULL) {
-		start = start->next;
-		len++;
-	}
-	Remove_kthNode_FromLast_recursive(*(head)->next, kPos);
+	Remove_kthNode_FromLast_recursive((*head)->next, kPos);
 	
-	int aPos = 0;
 
-	while (aPos == kPos) {
-		*head = temp->next;
-		free(temp);
-		return head;
-	}
-	while(temp != NULL && aPos != 1) {
-		temp2 = temp;
-		temp = temp->next;
-		aPos--;
+	if (++aPos == kPos) {
+//		temp2->next = temp->next;	
+//		free(temp);
 	}
 	
-	temp2->next = temp->next;	
-	free(temp);
 	return head;
 }
 
