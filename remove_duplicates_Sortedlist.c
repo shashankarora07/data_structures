@@ -11,10 +11,10 @@ void removeDuplicates_FromSortedlist(Node **head)
 	while (start != NULL && start->next != NULL) {
 		if (start->data == start->next->data) {
 			temp = start->next;
-			if(temp->next)
+			//if(temp->next)
 				start->next = temp->next;
-			else
-				start->next = temp;
+			//else
+			//	start->next = NULL;
 			free(temp);
 		} else {
 			start = start->next;
@@ -31,10 +31,12 @@ int main()
 	printf("enter no:\n");
 	do {
 		scanf("%d",&no);
+		if (no != 100) {
 		if (no == 1) 
 			Insert_linkedlist(&head,no,1);
 		else
 			Insert_linkedlist(&head,no,2);
+		}
 	} while(no != 100);
 	
 	Display_linkedlist(head);
