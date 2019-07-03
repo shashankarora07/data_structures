@@ -2,21 +2,21 @@
 #include<stdlib.h>
 #include "singly_linkedlist.h"
 
-Node *reverse(Node *head, int k)
-{
-	Node *current = head, *next = NULL, *prev = NULL;
-	int count = 0;
-
-	while(current != NULL && count < k) {
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-		count++;
-	}
-
-	return prev; 	
-}
+//Node *reverse(Node *head, int k)
+//{
+//	Node *current = head, *next = NULL, *prev = NULL;
+//	int count = 0;
+//
+//	while(current != NULL && count < k) {
+//		next = current->next;
+//		current->next = prev;
+//		prev = current;
+//		current = next;
+//		count++;
+//	}
+//
+//	return prev; 	
+//}
 
 
 Node* kth_reverseLinkedlist(Node *head, int k)
@@ -25,22 +25,36 @@ Node* kth_reverseLinkedlist(Node *head, int k)
 		printf("List is empty\n");
 		return;
 	}
-	Node *current = head, *next = NULL, *prev = NULL, *temp = head;
-	int count = 0, len = 0;
+	Node *current = head, *next = NULL, *prev = NULL, *start = head, *last = NULL;
+	Node *newhead = NULL;
+	int count = 0;
 
-	while (temp != NULL) {
-		temp = temp->next;
-		len++;
+
+	while (current) {
+		count = k;
+		prev = NULL;
+		start = current;
+
+		while(current != NULL && count-- ) {
+			next = current->next;
+			current->next = prev;
+			prev = current;
+			current = next;
+		}
+		
+		if (!newhead) {
+			newhead = prev;
+		}
+
+		if (last) {
+			last->next = prev;
+		}
+	
+		last = start;
 	}
-	printf("len = %d\n",len);	
-
-	while (count < len) {
-		reverse(current,k);
-		count += k; 
-	}
 
 
-	return prev;
+	return newhead;
 }
 
 int main()
