@@ -1,14 +1,22 @@
 #include<stdio.h>
+#include<stdlib.h>
 
-#define SIZE 9
+//#define SIZE 9
 
 int partition(int *, int, int);
 int QuickSort(int *, int, int);
 void swap(int *, int *);
 
-int main()
+int main(int argc, char *argv[])
 {
-    int arr[SIZE], start, end;
+	if (argc != 2) {
+		perror("Usage: input size required for array");
+		exit(0);
+	}
+
+	int size = atoi(argv[1]);	
+
+    int arr[size], start, end;
     int len = sizeof(arr)/sizeof(arr[0]);
 
     for(int i = 0; i < len; i++)
