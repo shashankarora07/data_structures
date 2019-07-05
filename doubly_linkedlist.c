@@ -102,7 +102,6 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 		newnode->prev = NULL;
 		if (*head)
 			(*head)->prev = newnode;
-
 		*head = newnode;
 		return;		
 	} else {
@@ -111,7 +110,7 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 	}
 	if (*head == NULL){
 		printf("No node is present\n");
-		return NULL;
+		return;
 	}
 	newnode->next = temp->next;
 	newnode->prev = temp;

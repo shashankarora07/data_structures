@@ -15,57 +15,57 @@ enum{
 
 };
 
-/*
-int main()
-{
 
-	int choice = 0, data = 0;
-	Node *head = NULL;
-	do{
-		printf("............Insert at the Begining : Press 1..............\n");
-		printf("............Insert at the END      : Press 2..............\n");
-		printf("............Insert at any Position : Press 3..............\n");
-		printf("............Display Linked list    : Press 4..............\n");
-		printf("............Delete first node      : Press 5..............\n");
-		printf("............Delete last node       : Press 6..............\n");
-		printf("............Delete any node        : Press 7..............\n");
-		printf("Enter choice:\n");
-		scanf("%d",&choice);
-		switch(choice)
-		{
-			case INSERT_BEG:
-			case INSERT_END:
-			case INSERT_POS:
-			{
-				printf("Enter data\n");
-				scanf("%d",&data);
-				Insert_linkedlist(&head,data,choice);
-				break;
-			}
-			case DISPLAY:
-			{
-				Display_linkedlist(head);
-				break;
-			}
-			case DELETE_BEG:
-			case DELETE_LAST:
-			case DELETE_POS:
-			{
-				Delete_fromLinked_list(&head,choice);
-				break;
-			}
-			
-			default:
-				printf("Get lost!! \n");
+//int main()
+//{
+//
+//	int choice = 0, data = 0;
+//	Node *head = NULL;
+//	do{
+//		printf("............Insert at the Begining : Press 1..............\n");
+//		printf("............Insert at the END      : Press 2..............\n");
+//		printf("............Insert at any Position : Press 3..............\n");
+//		printf("............Display Linked list    : Press 4..............\n");
+//		printf("............Delete first node      : Press 5..............\n");
+//		printf("............Delete last node       : Press 6..............\n");
+//		printf("............Delete any node        : Press 7..............\n");
+//		printf("Enter choice:\n");
+//		scanf("%d",&choice);
+//		switch(choice)
+//		{
+//			case INSERT_BEG:
+//			case INSERT_END:
+//			case INSERT_POS:
+//			{
+//				printf("Enter data\n");
+//				scanf("%d",&data);
+//				Insert_linkedlist(&head,data,choice);
+//				break;
+//			}
+//			case DISPLAY:
+//			{
+//				Display_linkedlist(head);
+//				break;
+//			}
+//			case DELETE_BEG:
+//			case DELETE_LAST:
+//			case DELETE_POS:
+//			{
+//				Delete_fromLinked_list(&head,choice);
+//				break;
+//			}
+//			
+//			default:
+//				printf("Get lost!! \n");
+//
+//		}
+//	} while(choice != EXIT);
+//
+//
+//
+//	return 0;
+//}
 
-		}
-	} while(choice != EXIT);
-
-
-
-	return 0;
-}
-*/
 
 void Insert_linkedlist(Node **head, int newdata, int option)
 {
@@ -106,7 +106,7 @@ void Insert_linkedlist(Node **head, int newdata, int option)
 void Delete_fromLinked_list(Node **head, int option)
 {
 	int count = 1;
-		int position = 0;
+	int position = 0;
 	Node *temp = *head, *temp2 = NULL;
 	if (*head == NULL) {
 		printf("List is already empty\n");
