@@ -72,7 +72,7 @@ Node *addTwonumberAsLists(Node **a, Node **b)
 	
 	Node* start = newL;
 	Node *temp = NULL;
-	while(*a != NULL || *b != NULL) {
+	while(*a != NULL || *b != NULL || carry) {
 		sum = (*a ? (*a)->data : 0)  + (*b ? (*b)->data : 0) + carry;
 		Insert_linkedlist(&temp,sum%10,1);
 		carry = sum/10;
