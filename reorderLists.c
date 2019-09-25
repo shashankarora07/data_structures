@@ -29,30 +29,21 @@ Node* reorderLists(Node *head)
 {
     Node *ptr1 = NULL, *ptr2 = NULL;
     Node *temp = NULL, *temp2 = NULL;
-    ptr1 = head;
     
-    int count = 0, var = 1;
-    
-    while(ptr1 != NULL) {
-        count++;
-        ptr1 = ptr1->next;
-    }
+	ptr1 = temp = head;
+	temp2 = head;
+	while(temp2->next && temp2->next->next) {
+		temp = temp->next;
+		temp2 = temp2->next->next;
+	}
 
-    printf("Count = %d\n",count);
-    temp = head;
-    ptr1 = temp;
+	Node *mid = temp->next;
+	temp->next = NULL;
 
-    while(var != count/2) {
-        var++;
-        temp = temp->next;
-    }
-    temp2 = temp->next;
-    temp->next = NULL;
     
     Display_linkedlist(ptr1);
-    //Display_linkedlist(temp2);
     
-    ptr2 = reverseList(temp2);
+    ptr2 = reverseList(mid);
     Display_linkedlist(ptr2);
 
     temp = NULL;
