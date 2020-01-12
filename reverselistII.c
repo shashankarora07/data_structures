@@ -33,8 +33,6 @@ Node* reverseListII(Node *head, int m, int n)
 	if (current != NULL)
 		tail->next = current;
 
-
-
 	return head;
 }
 
