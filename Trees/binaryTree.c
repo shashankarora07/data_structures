@@ -11,12 +11,13 @@ typedef struct BinaryTreeNode {
 }Binarynode;
 
 enum cases{
-	INSERTNODE=1,
+	INSERTBINARYSEARCHNODE=1,
 	DISPLAY,
 	PREORDER,
 	INORDER,
 	POSTORDER,
-	LEVELORDER
+	LEVELORDER,
+	INSERTBINARYTREENODE
 };
 
 Binarynode *createNode(int newdata)
@@ -29,7 +30,7 @@ Binarynode *createNode(int newdata)
 	return node;
 }
 
-void InsertNode(Binarynode **root,int newdata)
+void InsertBinarySearchTreeNode(Binarynode **root,int newdata)
 {
 	struct BinaryTreeNode *start, *prev;
 	start = *root;
@@ -167,6 +168,45 @@ void LevelOrder(Binarynode *root)
 	printf("NULL\n");
 }
 
+void InsertBinaryTreeNode(Binarynode **root, int newdata)
+{
+	Queue *Q = NULL;
+	Binarynode *start = *root, *temp = NULL;
+	Binarynode *newnode = createNode(newdata);
+
+	if (!newnode) {
+		perror("malloc failed\n");
+		return;
+	}
+	if (NULL == *root) {
+		*root = newnode;
+		return;
+	}
+
+	Enqueue(&Q,start);
+	while (!IsQueueEmpty(Q)) {
+			temp = Dequeue(&Q);
+
+			if (temp->left) {
+				Enqueue(&Q,temp->left);
+			}
+			else {
+				temp->left = newnode;
+				DeleteQueue(&Q);
+				return;
+			}
+			if (temp->right) {
+				Enqueue(&Q,temp->right);
+			}
+			else {
+				temp->right = newnode;
+				DeleteQueue(&Q);
+				return;
+			}
+	}
+	DeleteQueue(&Q);
+}
+
 int main()
 {		
 	Binarynode *head = NULL;
@@ -174,21 +214,29 @@ int main()
 	int data, choice;
 	
 	do {
-		printf("Press 1 for insert  \n");
+		printf("Press 1 for insert binary search node \n");
 		printf("Press 2 for display \n");
 		printf("Press 3 for Preorder \n");
 		printf("Press 4 for Inorder \n");
 		printf("Press 5 for Postorder \n");
 		printf("Press 6 for Levelorder \n");
+		printf("Press 7 for insert binaryTree node \n");
 		scanf("%d",&choice);
 		switch(choice)
 		{
-			case INSERTNODE:
+			case INSERTBINARYSEARCHNODE:
 			{
 					printf("Enter data:");
 					scanf("%d",&data);
-					InsertNode(&head,data);
+					InsertBinarySearchTreeNode(&head,data);
 					break;
+			}
+			case INSERTBINARYTREENODE:
+			{
+					printf("Enter data:");
+					scanf("%d",&data);
+					InsertBinaryTreeNode(&head,data);
+					break;				
 			}
 			case PREORDER:
 			{

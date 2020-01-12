@@ -1,12 +1,13 @@
 #include"queue.h"
 
-//enum{
-//    ENQUEUE=1,
-//    DEQUEUE,
-//    DISPLAY,
-//    EXIT=100
-//};
-//
+enum{
+    ENQUEUE=1,
+    DEQUEUE,
+    DISPLAY,
+	DELETEQUEUE,
+    EXIT=100
+};
+
 //int main()
 //{
 //
@@ -16,6 +17,7 @@
 //		printf("............Enqueue : Press 1..............\n");
 //		printf("............Dequeue      : Press 2..............\n");
 //		printf("............Display Queue   : Press 3..............\n");
+//		printf("............Delete Queue   : Press 4..............\n");
 //		printf("Enter choice:\n");
 //		scanf("%d",&choice);
 //		switch(choice)
@@ -24,7 +26,7 @@
 //			{
 //				printf("Enter data\n");
 //				scanf("%d",&data);
-//				Qhead = Enqueue(Qhead,data);
+//				Enqueue(&Qhead,data);
 //				break;
 //			}
 //			case DISPLAY:
@@ -39,7 +41,11 @@
 //					printf("Deleted : %d\n",data);
 //				break;
 //			}
-//			
+//			case DELETEQUEUE:
+//			{
+//				DeleteQueue(&Qhead);
+//				break;
+//			}
 //			default:
 //				printf("Get lost!! \n");
 //		}
@@ -63,15 +69,18 @@ void Enqueue(Queue **q, int newdata)
 {
 	struct Qnode *qnode;
 	qnode = QueueNode(newdata);
+	Queue *Q = *q;
 		
-	if (*q==NULL) {
-		*q = (Queue*)malloc(sizeof(Queue));
-		(*q)->rear = (*q)->front = NULL;
+	if (Q==NULL) {
+		Q = (Queue*)malloc(sizeof(Queue));
+		Q->rear = Q->front = NULL;
+		*q = Q;
+
 	}
 	
 	if (NULL == (*q)->rear) {
 		(*q)->rear = (*q)->front = qnode;
-		//return *q;
+		return;
 	}
 
 	(*q)->rear->next = qnode;
@@ -94,6 +103,7 @@ int Dequeue(Queue **q)
 	(*q)->front = (*q)->front->next;
 
 	free(temp);
+	temp = NULL;
 	
 	if (NULL == (*q)->front) {
 		(*q)->rear = NULL;
@@ -108,6 +118,34 @@ int IsQueueEmpty(Queue *q)
 		return 1;
 
 	return 0;
+}
+
+void DeleteQueue(Queue **q)
+{
+	if (*q == NULL)
+		return;
+
+	while(!IsQueueEmpty(*q)) {
+		//struct Qnode* temp = (*q)->front;
+		//(*q)->front = (*q)->front->next;
+		//free (temp);
+		Dequeue(q);
+	}
+
+//	if (IsQueueEmpty(*q))
+//		(*q)->rear = NULL;
+
+	*q = NULL;
+
+
+/*	struct Qnode *temp = NULL;
+	while (q) {
+		temp = q;
+		q->front = q->front->next;
+		free(temp);
+	}
+	free(q);
+*/
 }
 
 void DisplayQueue(Queue *q)
