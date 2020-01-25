@@ -126,18 +126,23 @@ void Delete_from_circular_linkedlist(CircularNode **head, int option)
 		} else {
 			*head = (*head)->next;
 		}
-		*head = (*head)->next;
+		//*head = (*head)->next;
 		free(temp);
-		temp = NULL;		
+		//temp = NULL;		
 		return;
 	} else {
+		if (current->next == *head) {
+			*head = NULL;
+			free(current);
+			return;
+		}
 		while (current->next != *head) {
 			temp = current;
 			current = current->next;
 		}
 		temp->next = current->next;
 		free(current);
-		current = NULL;
+		//current = NULL;
 		return;	
 	}
 }
@@ -145,7 +150,10 @@ void Delete_from_circular_linkedlist(CircularNode **head, int option)
 void Display_circular_linkedlist(CircularNode *head)
 {
 	CircularNode *node = head;
-	do { 
+	
+ 	do {
+		if (node == NULL)
+			break;
 		printf("%d-->",node->data);
 		node = node->next;
 	} while (node != head);
