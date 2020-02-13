@@ -1,4 +1,25 @@
-#include"queue.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+struct Qnode
+{
+	int data;
+	struct Qnode *next;
+};
+
+typedef struct QueueList
+{
+	struct Qnode *rear;
+	struct Qnode *front;
+}Queue;
+
+void Enqueue(Queue **, int);
+void DisplayQueue(Queue *);
+int Dequeue(Queue **);
+void DeleteQueue(Queue **);
+struct Qnode *QueueNode(int);
+int IsQueueEmpty(Queue *q);
 
 enum{
     ENQUEUE=1,
@@ -8,53 +29,53 @@ enum{
     EXIT=100
 };
 
-//int main()
-//{
-//
-//	int choice = 0, data = 0;
-//	Queue *Qhead = NULL;
-//	do{
-//		printf("............Enqueue : Press 1..............\n");
-//		printf("............Dequeue      : Press 2..............\n");
-//		printf("............Display Queue   : Press 3..............\n");
-//		printf("............Delete Queue   : Press 4..............\n");
-//		printf("Enter choice:\n");
-//		scanf("%d",&choice);
-//		switch(choice)
-//		{
-//			case ENQUEUE:
-//			{
-//				printf("Enter data\n");
-//				scanf("%d",&data);
-//				Enqueue(&Qhead,data);
-//				break;
-//			}
-//			case DISPLAY:
-//			{
-//				DisplayQueue(Qhead);
-//				break;
-//			}
-//			case DEQUEUE:
-//			{
-//				data = Dequeue(&Qhead);
-//				if (data != INT_MIN)
-//					printf("Deleted : %d\n",data);
-//				break;
-//			}
-//			case DELETEQUEUE:
-//			{
-//				DeleteQueue(&Qhead);
-//				break;
-//			}
-//			default:
-//				printf("Get lost!! \n");
-//		}
-//	} while(choice != EXIT);
-//
-//
-//
-//	return 0;
-//}
+int main()
+{
+
+	int choice = 0, data = 0;
+	Queue *Qhead = NULL;
+	do{
+		printf("............Enqueue : Press 1..............\n");
+		printf("............Dequeue      : Press 2..............\n");
+		printf("............Display Queue   : Press 3..............\n");
+		printf("............Delete Queue   : Press 4..............\n");
+		printf("Enter choice:\n");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case ENQUEUE:
+			{
+				printf("Enter data\n");
+				scanf("%d",&data);
+				Enqueue(&Qhead,data);
+				break;
+			}
+			case DISPLAY:
+			{
+				DisplayQueue(Qhead);
+				break;
+			}
+			case DEQUEUE:
+			{
+				data = Dequeue(&Qhead);
+				if (data != INT_MIN)
+					printf("Deleted : %d\n",data);
+				break;
+			}
+			case DELETEQUEUE:
+			{
+				DeleteQueue(&Qhead);
+				break;
+			}
+			default:
+				printf("Get lost!! \n");
+		}
+	} while(choice != EXIT);
+
+
+
+	return 0;
+}
 
 struct Qnode* QueueNode(int val)
 {

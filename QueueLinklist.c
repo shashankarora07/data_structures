@@ -134,7 +134,7 @@ int Dequeue(struct Queue **Q)
 	temp = NULL;
 
     if ((*Q)->front == NULL) {
-            (*Q)->rear = NULL;
+        (*Q)->rear = NULL;
     }
 
 	return data;		
@@ -142,6 +142,8 @@ int Dequeue(struct Queue **Q)
 
 int Delete_Queue(struct Queue **Q)
 {
+	if (*Q == NULL)
+		return;
 	while ((*Q)->front != NULL) {
 		Dequeue(Q);
 	}

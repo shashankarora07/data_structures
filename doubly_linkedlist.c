@@ -81,8 +81,20 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 	int count = 1, position = 0;
 	newnode = (DLLNode *)malloc(sizeof(DLLNode));
 	newnode->data = newdata;
+	//if (*head == NULL){
+	//	printf("No node is present\n");
+	//	return;
+	//}
 	if (!newnode) {
 		printf("malloc failed\n");
+		return;
+	}
+	if (option == INSERT_BEG || position == 1) {
+		newnode->next = *head;
+		newnode->prev = NULL;
+		if (*head)
+			(*head)->prev = newnode;
+		*head = newnode;
 		return;
 	}
 	if (option == INSERT_POS) {
@@ -96,21 +108,9 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 			printf("position is out of scope\n");
 			return;
 		}	
-	}
-	if (option == INSERT_BEG || position == 1) {
-		newnode->next = *head;
-		newnode->prev = NULL;
-		if (*head)
-			(*head)->prev = newnode;
-		*head = newnode;
-		return;		
 	} else {
 		while (temp->next != NULL)
 			temp = temp->next;
-	}
-	if (*head == NULL){
-		printf("No node is present\n");
-		return;
 	}
 	newnode->next = temp->next;
 	newnode->prev = temp;
@@ -123,26 +123,32 @@ void Insert_doubly_linkedlist(DLLNode **head, int newdata, int option)
 
 void Delete_from_doubly_linkedlist(DLLNode **head, int option)
 {
-	DLLNode *temp = *head, *temp2;
+	DLLNode *temp = *head, *temp2 = NULL;
 	int count = 1, position = 0;
 
 	if (*head == NULL) {
 		printf("List is empty\n");
 		return;
 	}
-	if (option == DELETE_POS) {
-		printf("Enter position\n");
-		scanf("%d",&position);
-		while((temp->next != NULL) && (count < position))
-			temp = temp->next;
-		
+	if (temp->next == NULL) {
+		*head = NULL;
+		free(temp);
+		return;
 	}
 	if (option == DELETE_BEG || position == 1) {
 		*head = (*head)->next;
 		if (*head != NULL)
 			(*head)->prev = NULL;
 		free(temp);
-		return;					
+		return;
+	}					
+	if (option == DELETE_POS) {
+		printf("Enter position\n");
+		scanf("%d",&position);
+		while((temp->next != NULL) && (count < position)) {
+			count++;
+			temp = temp->next;
+		}
 	} else {
 		while(temp->next != NULL)
 			temp = temp->next;
@@ -152,8 +158,6 @@ void Delete_from_doubly_linkedlist(DLLNode **head, int option)
 	if (temp->next)
 		temp->next->prev = temp2;
 	free(temp);
-	return;
-	
 }
 
 void Display_doubly_linkedlist(DLLNode *head)

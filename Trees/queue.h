@@ -17,5 +17,6 @@ typedef struct QueueList
 void Enqueue(Queue **, int);
 void DisplayQueue(Queue *);
 int Dequeue(Queue **);
+void DeleteQueue(Queue **);
 struct Qnode *QueueNode(int);
 int IsQueueEmpty(Queue *q);
