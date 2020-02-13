@@ -39,9 +39,18 @@ void Display_linkedlist(Node *node)
 	printf("NULL\n");
 }
 
-int SearchStringInLinkedlist(Node **head)
+int SearchStringInLinkedlist(Node *head, char str[])
 {
+	Node *start = head;
 
+	if (strcmp(start->s,str) == 0) {
+		return 1;
+	}
+	
+	if (start)
+		start = start->next;
+	
+	return 0;
 }
 
 int main()
@@ -67,7 +76,8 @@ int main()
 	} while (data[0] != '0');
 	
 	Display_linkedlist(head);
-	ret = SearchStringInLinkedlist(head);
+	char *key_str = "xyz";
+	ret = SearchStringInLinkedlist(head,key_str);
 	if(ret)
 		printf("String exist\n");
 	else
