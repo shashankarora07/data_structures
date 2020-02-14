@@ -2,35 +2,52 @@
 #include<stdlib.h>
 #include<string.h>
 
-typedef struct ListNode {
-	char s[50];
-	struct Listnode *next;
-}Node;
+const int TOTAL_SIZE = 26;
 
-void Insert_linkedlist(Node **head, char c[])
+/* typedef struct TrieNode {
+	char *s[TOTAL_SIZE];
+	struct TrieNode *next;
+}trieNode;
+*/ /* why this one will not work?  */
+
+typedef struct TrieNode {
+	struct TrieNode *s[TOTAL_SIZE];
+	int endofWord:1;
+}trieNode;
+
+trieNode *createTrieNode()
 {
-	Node *newnode = (Node *)malloc(sizeof(Node));
-	Node *start = *head;
-	if (!newnode) {
-		printf("malloc failed\n");
-		return;
-	}
-	strcpy(newnode->s,c);
-	newnode->next = NULL;
+	trieNode *newnode = (trieNode *)malloc(sizeof(trieNode));
 
-	if (*head == NULL)
-	{
-		*head = newnode;
-		return;
-	} else {
-		while (start->next != NULL) 
-			start = start->next;
-	}
-	newnode->next = start->next;
-	start->next = newnode;
+	int i = 0;
+
+	for (i = 0; i < TOTAL_SIZE; i++)
+		newnode->s[i] = NULL;
+
+	newnode->endofWord = 0;
+
+	return newnode;
 }
 
-void Display_linkedlist(Node *node)
+void Insert_linkedlist(trieNode *head, const char *c)
+{
+	int len = strlen(c);
+	int index = 0, i = 0;
+
+	trieNode *start = head;
+
+	for (i = 0; i < len; i++) {
+		index = *(c+i) - 'a';
+		if (!start->s[index]) {
+			start->s[index] = createTrieNode();
+		}
+		start = start->s[index];
+	}
+
+
+}
+
+void Display_linkedlist(trieNode *node)
 {
 	while(node != NULL) {
 		printf("%s ---> ",node->s);
@@ -43,19 +60,20 @@ int SearchStringInLinkedlist(Node *head, char str[])
 {
 	Node *start = head;
 
-	if (strcmp(start->s,str) == 0) {
-		return 1;
-	}
-	
-	if (start)
+	while (start) {
+		if (strcmp(start->s,str) == 0) {
+			return 1;
+		}
+		
 		start = start->next;
+	}
 	
 	return 0;
 }
 
 int main()
 {
-	Node *head = NULL;
+	trieNode head = NULL;
 	char data[50];
 	int ret = 0, i = 0;
 
@@ -76,7 +94,7 @@ int main()
 	} while (data[0] != '0');
 	
 	Display_linkedlist(head);
-	char *key_str = "xyz";
+	char *key_str = "bea";
 	ret = SearchStringInLinkedlist(head,key_str);
 	if(ret)
 		printf("String exist\n");
