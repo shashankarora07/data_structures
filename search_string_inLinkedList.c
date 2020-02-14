@@ -4,7 +4,7 @@
 
 typedef struct ListNode {
 	char s[50];
-	struct Listnode *next;
+	struct ListNode *next;
 }Node;
 
 void Insert_linkedlist(Node **head, char c[])
@@ -43,13 +43,14 @@ int SearchStringInLinkedlist(Node *head, char str[])
 {
 	Node *start = head;
 
-	if (strcmp(start->s,str) == 0) {
-		return 1;
-	}
+	while (start) {
+		if (strcmp(start->s,str) == 0) {
+			return 1;
+		}
 	
-	if (start)
 		start = start->next;
-	
+	}
+
 	return 0;
 }
 
