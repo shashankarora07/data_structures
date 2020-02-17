@@ -23,13 +23,16 @@ Node* swapPairs(Node *head)
 int main()
 {
 	Node *head = NULL;
-	int data = 0, k = 0;
+	int data = 0, flag = 1;
 	printf("Enter linkedlist data:\n");
+	printf("Press 100 to exit\n");
 	do {
 		scanf("%d",&data);
 		if (data != 100) {
-		if (data == 1) 
+		if (flag) { 
 			Insert_linkedlist(&head,data,1);
+			flag = 0;
+		}
 		else
 			Insert_linkedlist(&head,data,2);
 		}

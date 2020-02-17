@@ -24,10 +24,12 @@ Node *mergeSorted_Linkedlist(Node **a, Node **b)
 		newL = newL->next;
 	}
 
-	if(*a == NULL)
+	//if(*a == NULL)
+	if(!(*a))
 		newL->next = *b;
 
-	if(*b == NULL)
+	//if(*b == NULL)
+	if(!(*b))
 		newL->next = *a;
 	
 	
