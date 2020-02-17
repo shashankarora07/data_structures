@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-const int TOTAL_SIZE = 26;
+#define TOTAL_SIZE (26)
 
 /* typedef struct TrieNode {
 	char *s[TOTAL_SIZE];
@@ -12,7 +12,7 @@ const int TOTAL_SIZE = 26;
 
 typedef struct TrieNode {
 	struct TrieNode *s[TOTAL_SIZE];
-	int endofWord:1;
+	int endofWord;
 }trieNode;
 
 trieNode *createTrieNode()
@@ -21,59 +21,73 @@ trieNode *createTrieNode()
 
 	int i = 0;
 
+	newnode->endofWord = 0;
+
 	for (i = 0; i < TOTAL_SIZE; i++)
 		newnode->s[i] = NULL;
-
-	newnode->endofWord = 0;
+	
 
 	return newnode;
 }
 
-void Insert_linkedlist(trieNode *head, const char *c)
+void Insert_linkedlist(trieNode **head, const char *c)
 {
 	int len = strlen(c);
 	int index = 0, i = 0;
+	printf("len of %s is %d\n",c , len);
 
-	trieNode *start = head;
+	trieNode *start = *head;
 
 	for (i = 0; i < len; i++) {
 		index = *(c+i) - 'a';
+		printf("index: %d\n",index );
 		if (!start->s[index]) {
 			start->s[index] = createTrieNode();
 		}
 		start = start->s[index];
 	}
 
-
+	start->endofWord = 1;
 }
 
 void Display_linkedlist(trieNode *node)
 {
-	while(node != NULL) {
-		printf("%s ---> ",node->s);
-		node = node->next;
-	}
-	printf("NULL\n");
+
 }
 
-int SearchStringInLinkedlist(Node *head, char str[])
+int SearchStringInLinkedlist(trieNode *head, char str[])
 {
-	Node *start = head;
+	trieNode *start = head;
+	int len = strlen(str);
+	int i = 0, index = 0;
 
-	while (start) {
-		if (strcmp(start->s,str) == 0) {
-			return 1;
+	for (i = 0; i < len; i++) {
+		index = (*(str+i) - 'a');
+		printf(" check index : %d\n",index );
+
+		/*if (start->s[index]) {
+			start = start->s[index];
+		}*/
+
+		if (!start->s[index]) {
+			return 0;
 		}
-		
-		start = start->next;
+
+		start = start->s[index];
 	}
-	
-	return 0;
+
+	if (start->endofWord && start != NULL) {
+		return 1;
+	} else {
+		return 0;
+	}
+
+	//return 0;
 }
 
 int main()
 {
-	trieNode head = NULL;
+	trieNode *head = createTrieNode();
 	char data[50];
 	int ret = 0, i = 0;
 
@@ -94,7 +108,9 @@ int main()
 	} while (data[0] != '0');
 	
 	Display_linkedlist(head);
-	char *key_str = "bea";
+
+	char *key_str = "beb";
+
 	ret = SearchStringInLinkedlist(head,key_str);
 	if(ret)
 		printf("String exist\n");
